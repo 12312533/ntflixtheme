@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>HAPPY BIRTHDAY LOVEE</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="screen">
+        <div class="netflix-logo-text">NETFLIX ORIGINAL</div>
+        <p class="loading-subtitle">A birthday story for Lovee.</p>
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="netflix-sound" src="assets/netflix-tadum.mp3" preload="auto"></audio>
+
+    <!-- Profile Selection Screen -->
+    <div id="profile-screen" class="screen hidden">
+        <div class="profile-container">
+            <h1>Who's watching?</h1>
+            <div class="profiles">
+                <div class="profile-card" id="profile-lovee">
+                    <div class="avatar-wrapper">
+                        <img src="moment 2.jpg" alt="Lovee" class="avatar-img" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMzMzMiLz48L3N2Zz4='">
+                    </div>
+                    <p class="profile-name">Lovee ❤️</p>
+                </div>
+                <div class="profile-card" id="profile-guest">
+                    <div class="avatar-wrapper guest-avatar">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <p class="profile-name">Guest</p>
+                    <div class="tooltip" id="guest-tooltip">Sorry, this story is only for Lovee ❤️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Intro Screen -->
+    <div id="intro-screen" class="screen hidden">
+        <video id="intro-video" playsinline webkit-playsinline>
+            <source src="Netflix Intro 1080p (Highest Quality).mp4" type="video/mp4">
+        </video>
+        <button id="skip-intro" class="skip-btn">Skip Intro <i class="fa-solid fa-forward-step"></i></button>
+    </div>
+
+    <!-- Main Website -->
+    <div id="main-content" class="hidden">
+        
+        <!-- Navbar -->
+        <nav id="navbar">
+            <div class="nav-brand">Lovee</div>
+            <ul class="nav-links desktop-nav">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#episodes">Episodes</a></li>
+                <li><a href="#trending">Trending</a></li>
+                <li><a href="#watchlist">Watchlist</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu-overlay hidden">
+                <div class="close-menu-btn" id="close-menu-btn"><i class="fa-solid fa-xmark"></i></div>
+                <ul class="mobile-nav-links">
+                    <li><a href="#home" class="mobile-link">Home</a></li>
+                    <li><a href="#episodes" class="mobile-link">Episodes</a></li>
+                    <li><a href="#trending" class="mobile-link">Trending</a></li>
+                    <li><a href="#watchlist" class="mobile-link">Watchlist</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-bg" style="background-image: url('moment 6.jpg');"></div>
+            <div class="hero-vignette"></div>
+            
+            <div class="hero-content">
+                <h2 class="hero-small-title">NETFLIX ORIGINAL</h2>
+                <h1 class="hero-title">HAPPY BOYFRIEND<br>DAY</h1>
+                
+                <div class="hero-metadata">
+                    <span class="match-text">912% Match</span>
+                    <span>2026</span>
+                    <span class="box-text">1 Season</span>
+                    <span class="box-text">HD</span>
+                </div>
+                
+                <p class="hero-synopsis">
+                    Happy Boyfriend Day, Lovee! This is a special story dedicated to you. A journey through our memories, our love, and the moments that make us smile. Let's celebrate this day with a cinematic experience made just for yout.
+                </p>
+                
+                <div class="hero-buttons">
+                    <button id="btn-watch" class="btn btn-primary"><i class="fa-solid fa-play"></i> Watch</button>
+                    <div class="my-list-wrapper">
+                        <button id="btn-mylist" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> My List</button>
+                        <span class="mylist-tooltip">Already in my heart ❤️</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Episodes Section -->
+        <section id="episodes" class="netflix-section">
+            <h2 class="section-title">Episodes</h2>
+            <p class="section-subtitle">Every moment deserves its own chapter.</p>
+            
+            <div class="carousel-container episodes-carousel">
+                <div class="episode-card" 
+                     data-ep="Episode 1" 
+                     data-title="The Teaser" 
+                     data-duration="01:00" 
+                     data-video="sarahcrla_pindown.io_1790715613.mp4"
+                     data-poster="Chapter 1.jpg"
+                     data-desc="Happy Boyfriend Day, Lovee! This is the opening of our story a brand new chapter full of surprises. In this episode, let's cherish the moment the universe brought you into my life and made every single day brighter.">
+                    <div class="episode-thumbnail" style="background-image: url('Chapter 1.jpg');">
+                        <div class="play-overlay"><i class="fa-regular fa-circle-play"></i></div>
+                    </div>
+                    <div class="episode-info">
+                        <div class="episode-header">
+                            <h3>Episode 01 — The Teaser</h3>
+                            <span class="duration">01:00</span>
+                        </div>
+                        <p class="episode-desc">Happy Boyfriend Day, Lovee! This is a special story dedicated to you. A journey through our memories, our love, and the moments that make us smile. Let's celebrate this day with a cinematic experience made just for you.</p>
+                    </div>
+                </div>
+
+                <div class="episode-card" 
+                     data-ep="Episode 2" 
+                     data-title="Behind the Scenes" 
+                     data-duration="04:30" 
+                     data-video="zzzzaidddd_pindown.io_1790715686.mp4"
+                     data-poster="Chapter 2.jpg"
+                     data-desc="Every second and laugh shared with you feels like a scene from my favorite movie that I never want to end. Thank you for being the most supportive, loving, and amazing boyfriend I could ever ask for.">
+                    <div class="episode-thumbnail" style="background-image: url('Chapter 2.jpg');">
+                        <div class="play-overlay"><i class="fa-regular fa-circle-play"></i></div>
+                    </div>
+                    <div class="episode-info">
+                        <div class="episode-header">
+                            <h3>Episode 02 — Behind the Scenes</h3>
+                            <span class="duration">04:30</span>
+                        </div>
+                        <p class="episode-desc">Every second and laugh shared with you feels like a scene from my favorite movie that I never want to end. Thank you for being the most supportive, loving, and amazing boyfriend I could ever ask for.</p>
+                    </div>
+                </div>
+
+                <div class="episode-card special-episode" 
+                     data-ep="Episode 3" 
+                     data-title="Director’s Cut: The Wishes" 
+                     data-duration="99:99" 
+                     data-video="shejustakiddrawtheuniverse_pindown.io_1790715643.mp4"
+                     data-poster="Chapter 3.jpg"
+                     data-desc="This is my deepest message. My best wishes for Lovee, hoping that everything you plan goes smoothly, all your dreams slowly become reality, and that you always have a reason to smile. I will always be here to watch every episode of your life next. ❤️">
+                    <div class="episode-thumbnail" style="background-image: url('Chapter 3.jpg');">
+                        <div class="play-overlay"><i class="fa-regular fa-circle-play"></i></div>
+                    </div>
+                    <div class="episode-info">
+                        <div class="episode-header">
+                            <h3 class="highlight-text">Episode 03 — Director’s Cut: The Wishes</h3>
+                            <span class="duration">99:99</span>
+                        </div>
+                        <p class="episode-desc">This is my deepest message. My best wishes for Lovee, hoping that everything you plan goes smoothly, all your dreams slowly become reality, and that you always have a reason to smile. I will always be here to watch every episode of your life next. ❤️</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Now -->
+        <section id="trending" class="netflix-section">
+            <h2 class="section-title">Trending Now</h2>
+            <p class="section-subtitle">Top 10 In My Heart</p>
+            
+            <div class="carousel-container trending-carousel">
+                <div class="trending-item">
+                    <span class="trending-number">1</span>
+                    <div class="trending-poster" style="background-image: url('Chapter 4.jpg');">
+                        <div class="trending-title-overlay">Smile of the Year</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-number">2</span>
+                    <div class="trending-poster" style="background-image: url('Chapter 5.jpg');">
+                        <div class="trending-title-overlay">Cutest Human</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-number">3</span>
+                    <div class="trending-poster" style="background-image: url('Chapter 6.jpg');">
+                        <div class="trending-title-overlay">My Favorite Person</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-number">4</span>
+                    <div class="trending-poster" style="background-image: url('Chapter 7.jpg');">
+                        <div class="trending-title-overlay">Miss Independent</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-number">5</span>
+                    <div class="trending-poster" style="background-image: url('Chapter 8.jpg');">
+                        <div class="trending-title-overlay">The Pretty One</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Watchlist Section (Dinamis) -->
+        <section id="watchlist" class="netflix-section">
+            <h2 class="section-title">Lovee’s Watchlist</h2>
+            <p class="section-subtitle">Stories we haven't lived yet. (Click to open Album)</p>
+            
+            <div class="watchlist-grid">
+                <div class="watchlist-item" data-album="movie" data-title="Movie Date Memories">
+                    <div class="wl-bg" style="background-image: url('Chapter 9.jpg');"></div>
+                    <div class="wl-content"><h4>Movie Date</h4><p>View Album</p></div>
+                    <i class="fa-solid fa-heart wl-icon"></i>
+                </div>
+                <div class="watchlist-item" data-album="staycation" data-title="Staycation Adventures">
+                    <div class="wl-bg" style="background-image: url('Chapter 10.jpg');"></div>
+                    <div class="wl-content"><h4>Staycation</h4><p>View Album</p></div>
+                    <i class="fa-solid fa-heart wl-icon"></i>
+                </div>
+                <div class="watchlist-item" data-album="coffee" data-title="Coffee & Cozy Dates">
+                    <div class="wl-bg" style="background-image: url('Chapter 11.jpg');"></div>
+                    <div class="wl-content"><h4>Coffee Date</h4><p>View Album</p></div>
+                    <i class="fa-solid fa-heart wl-icon"></i>
+                </div>
+                <div class="watchlist-item" data-album="beach" data-title="Beach Trip Getaways">
+                    <div class="wl-bg" style="background-image: url('Chapter 12.jpg');"></div>
+                    <div class="wl-content"><h4>Beach Trip</h4><p>View Album</p></div>
+                    <i class="fa-solid fa-heart wl-icon"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="cinematic-footer">
+            <h2 class="credits-title">Cast & Crew</h2>
+            <div class="credits-grid">
+                <div class="credit-item">
+                    <span class="credit-role">Starring</span>
+                    <span class="credit-name">Your Baee</span>
+                </div>
+                <div class="credit-item">
+                    <span class="credit-role">Directed by</span>
+                    <span class="credit-name">The Person Who Loves You Most</span>
+                </div>
+                <div class="credit-item">
+                    <span class="credit-role">Genre</span>
+                    <span class="credit-name">Unconditional Love, Happy Tears</span>
+                </div>
+            </div>
+            <p class="credit-special">Written for one very special person.</p>
+            <div class="ending-sequence">
+                <p class="end-q">End of Chapter?</p>
+                <p class="end-a">Not really.</p>
+                <h1 class="happy-birthday">Happy Boyfriend Day, Lovee. ❤️</h1>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- UNIVERSAL EPISODE MODAL (FULL CONTROLS & FULLSCREEN READY) -->
+    <div id="universal-episode-modal" class="modal-overlay hidden">
+        <div class="ep-modal-wrapper">
+            <div class="modal-close" id="close-univ-ep"><i class="fa-solid fa-xmark"></i></div>
+            
+            <div class="ep-modal-hero">
+                <!-- Atribut 'controls' DIKEMBALIKAN untuk volume & slider durasi -->
+                <!-- Atribut 'playsinline webkit-playsinline' WAJIB agar tidak otomatis full screen di HP -->
+                <video id="univ-ep-video" controls playsinline webkit-playsinline preload="metadata">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            
+            <div class="ep-modal-details">
+                <h2 class="ep-series-title">LOVEEE: THE BOYFRIEND DAY</h2>
+                <h1 class="ep-main-title" id="univ-ep-title">Season 1 Episode 1</h1>
+                <h3 class="ep-sub-title" id="univ-ep-subtitle">The Teaser</h3>
+                
+                <div class="ep-metadata-line">
+                    <span id="univ-ep-duration">01:00</span>
+                    <span class="match-text"><i class="fa-solid fa-star"></i> 10.0</span>
+                    <span>Indonesia</span>
+                    <span class="box-text">HD</span>
+                </div>
+                
+                <div class="ep-actions-row">
+                    <button id="univ-ep-play-btn" class="btn btn-primary"><i class="fa-solid fa-play"></i> Putar Video</button>
+                    <!-- TOMBOL FULLSCREEN BARU -->
+                    <button id="univ-ep-fs-btn" class="btn btn-secondary"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+                    <button class="btn btn-secondary"><i class="fa-regular fa-heart"></i> Love</button>
+                </div>
+                
+                <p class="ep-synopsis-text" id="univ-ep-desc">Sinopsis/pesan akan muncul di sini...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILM ROLL ALBUM MODAL -->
+    <div id="film-roll-modal" class="modal-overlay hidden">
+        <div class="modal-close" id="close-film-roll"><i class="fa-solid fa-xmark"></i></div>
+        
+        <div class="film-modal-header">
+            <h2 id="film-modal-title">Our Beautiful Memories</h2>
+            <p>Geser untuk melihat bingkai cerita kita.</p>
+        </div>
+
+        <div class="film-strip-wrapper" id="film-strip-wrapper">
+            <div class="film-strip-album" id="film-strip-container">
+            </div>
+        </div>
+    </div>
+
+    <!-- Are You Still Watching Modal -->
+    <div id="easter-egg-modal" class="modal-overlay hidden">
+        <div class="easter-egg-content">
+            <h2>Are you still smiling, Lovee?</h2>
+            <p>We just want to make sure you’re still enjoying your favorite story.</p>
+            <button id="btn-still-watching" class="btn btn-primary">Yes, I am!</button>
+        </div>
+    </div>
+
+    <!-- Canvas -->
+    <canvas id="hearts-canvas" class="hidden"></canvas>
+    <canvas id="confetti-canvas" class="hidden"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

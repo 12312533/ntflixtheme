@@ -1,0 +1,302 @@
+/* ==========================================================================
+   A. RESET & BASE VARIABLES
+   ========================================================================== */
+:root {
+    --netflix-red: #E50914;
+    --dark-bg: #000000;
+    --charcoal: #141414;
+    --text-main: #FFFFFF;
+    --text-muted: #808080;
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --transition-fast: 0.3s ease;
+    --transition-slow: 0.8s ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--dark-bg); color: var(--text-main);
+    font-family: var(--font-body); overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; min-height: 100vh; min-height: 100svh;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--dark-bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+a { text-decoration: none; color: inherit; }
+
+.hidden { display: none !important; opacity: 0; pointer-events: none; }
+.fade-out { opacity: 0 !important; transition: opacity var(--transition-slow); }
+
+.screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100svh;
+    z-index: 9999; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; background-color: var(--dark-bg); transition: opacity var(--transition-slow);
+}
+
+img, .hero-bg, .episode-thumbnail, .trending-poster, .wl-bg, .film-frame-item {
+    background-color: #1a1a1a;
+}
+
+/* ==========================================================================
+   B. LOADING SCREEN
+   ========================================================================== */
+.netflix-logo-text {
+    font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--netflix-red); letter-spacing: 2px; text-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+    animation: scaleIn 1.5s ease-out;
+}
+.loading-subtitle { font-size: 1.2rem; color: var(--text-muted); margin-top: 10px; }
+.spinner {
+    margin-top: 30px; width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite;
+}
+
+/* ==========================================================================
+   C. PROFILE SCREEN
+   ========================================================================== */
+#profile-screen { background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); }
+.profile-container h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; margin-bottom: 2rem; text-align: center; }
+.profiles { display: flex; gap: 3rem; justify-content: center; }
+.profile-card { display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; transition: transform var(--transition-fast); }
+.profile-card:hover { transform: scale(1.05); }
+.avatar-wrapper { width: clamp(100px, 15vw, 150px); aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: border-color var(--transition-fast); }
+.profile-card:hover .avatar-wrapper { border-color: white; }
+.avatar-img { width: 100%; height: 100%; object-fit: cover; }
+.guest-avatar { background-color: #333; display: flex; justify-content: center; align-items: center; font-size: 3rem; color: #666; }
+.profile-name { margin-top: 1rem; font-size: 1.2rem; color: var(--text-muted); }
+.profile-card:hover .profile-name { color: white; }
+.tooltip { position: absolute; bottom: -40px; background: var(--netflix-red); color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.9rem; white-space: nowrap; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; pointer-events: none; }
+.tooltip.show { opacity: 1; transform: translateY(0); }
+.shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* ==========================================================================
+   D. VIDEO INTRO SCREEN
+   ========================================================================== */
+#intro-screen { background-color: black; z-index: 9998; }
+#intro-video { width: 100%; height: 100%; object-fit: contain; }
+.skip-btn { position: absolute; bottom: 40px; right: 40px; background: rgba(255, 255, 255, 0.2); color: white; padding: 10px 20px; border-radius: 4px; font-size: 1.1rem; backdrop-filter: blur(5px); transition: background 0.3s ease; display: flex; align-items: center; gap: 10px; }
+.skip-btn:hover { background: rgba(255, 255, 255, 0.4); }
+@media (max-width: 768px) { .skip-btn { bottom: 20px; right: 20px; font-size: 0.9rem; } }
+
+/* ==========================================================================
+   E. NAVBAR
+   ========================================================================== */
+#navbar { position: fixed; top: 0; width: 100%; padding: 1.5rem 4%; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%); transition: background-color var(--transition-fast); }
+#navbar.scrolled { background-color: var(--charcoal); }
+.nav-brand { font-family: var(--font-heading); font-size: 2rem; color: var(--netflix-red); letter-spacing: 1px; }
+.nav-links { list-style: none; display: flex; gap: 1.5rem; }
+.nav-links li a { font-size: 0.9rem; transition: color var(--transition-fast); }
+.nav-links li a:hover { color: var(--text-muted); }
+.mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; }
+.mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100svh; background-color: rgba(0,0,0,0.95); z-index: 101; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.close-menu-btn { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; }
+.mobile-nav-links { list-style: none; text-align: center; }
+.mobile-nav-links li { margin: 2rem 0; }
+.mobile-nav-links a { font-size: 1.5rem; font-weight: 600; }
+
+/* ==========================================================================
+   F. HERO SECTION
+   ========================================================================== */
+.hero { position: relative; z-index: 1; height: 100vh; height: 100svh; width: 100%; display: flex; align-items: flex-end; justify-content: flex-start; padding: 6rem 4% 4rem 4%; overflow: hidden; }
+.hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center 20%; z-index: -2; }
+.hero-vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%), linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(0,0,0,0.3) 40%, transparent 100%); z-index: -1; }
+.hero-content { max-width: 45%; z-index: 10; position: relative; animation: fadeUpContent 1.2s ease-out forwards; }
+@keyframes fadeUpContent { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+
+.hero-small-title { font-family: var(--font-heading); letter-spacing: 5px; color: #e5e5e5; font-size: clamp(1rem, 2vw, 1.5rem); margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.hero-title { font-family: var(--font-heading); font-size: clamp(3.5rem, 8vw, 6rem); line-height: 0.9; margin-bottom: 1rem; text-shadow: 3px 3px 6px rgba(0,0,0,0.8); letter-spacing: 1px; }
+.hero-metadata { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+.match-text { color: #46d369; }
+.box-text { border: 1px solid var(--text-muted); padding: 1px 4px; border-radius: 3px; font-size: 0.8rem; }
+.hero-synopsis { font-size: clamp(1rem, 1.2vw, 1.2rem); line-height: 1.5; text-shadow: 2px 2px 4px rgba(0,0,0,0.9); margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: #e5e5e5; }
+.hero-buttons { display: flex; gap: 1rem; position: relative; }
+.btn { padding: 0.6rem 1.5rem; font-size: 1.1rem; font-weight: 600; border-radius: 4px; display: flex; align-items: center; gap: 10px; transition: transform 0.2s ease, background-color 0.2s ease; }
+.btn:hover { transform: scale(1.03); }
+.btn-primary { background-color: white; color: black; }
+.btn-primary:hover { background-color: rgba(255,255,255,0.8); }
+.btn-secondary { background-color: rgba(109, 109, 110, 0.7); color: white; }
+.btn-secondary:hover { background-color: rgba(109, 109, 110, 0.4); }
+.my-list-wrapper { position: relative; }
+.mylist-tooltip { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: var(--dark-bg); padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.my-list-wrapper:hover .mylist-tooltip, .my-list-wrapper:focus-within .mylist-tooltip { opacity: 1; }
+@media (max-width: 768px) { .hero-content { max-width: 100%; } .hero-vignette { background: linear-gradient(to top, rgba(20,20,20,1) 0%, rgba(0,0,0,0.7) 50%, transparent 100%); } }
+
+/* ==========================================================================
+   G. CAROUSEL & SECTIONS
+   ========================================================================== */
+.netflix-section { padding: 3rem 4%; background-color: var(--charcoal); position: relative; }
+.section-title { font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 0.2rem; }
+.section-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.carousel-container { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+.carousel-container::-webkit-scrollbar { height: 4px; }
+.carousel-container::-webkit-scrollbar-thumb { background: transparent; }
+.carousel-container:hover::-webkit-scrollbar-thumb { background: #555; }
+
+/* ==========================================================================
+   H. EPISODES, TRENDING & WATCHLIST
+   ========================================================================== */
+.episode-card { flex: 0 0 85%; max-width: 400px; scroll-snap-align: start; border-radius: 8px; overflow: hidden; background-color: #1a1a1a; transition: transform var(--transition-fast); cursor: pointer; }
+@media (min-width: 768px) { .episode-card { flex: 0 0 45%; } }
+@media (min-width: 1024px) { .episode-card { flex: 0 0 30%; } }
+.episode-thumbnail { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; position: relative; transition: transform var(--transition-fast); }
+.play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; font-size: 3rem; opacity: 0; transition: opacity var(--transition-fast); }
+.episode-card:hover .play-overlay { opacity: 1; }
+.episode-card:hover .episode-thumbnail { transform: scale(1.02); }
+.episode-info { padding: 1rem; }
+.episode-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.episode-header h3 { font-size: 1.1rem; }
+.duration { font-size: 0.8rem; color: var(--text-muted); }
+.episode-desc { font-size: 0.9rem; color: #b3b3b3; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.highlight-text { color: var(--netflix-red); }
+
+.trending-item { flex: 0 0 40%; max-width: 250px; scroll-snap-align: start; position: relative; display: flex; align-items: flex-end; padding-left: 20px; transition: transform var(--transition-fast); }
+@media (max-width: 768px) { .trending-item { flex: 0 0 60%; } }
+.trending-item:hover { transform: scale(1.05); }
+.trending-number { font-family: var(--font-heading); font-size: clamp(6rem, 15vw, 12rem); line-height: 0.8; color: var(--charcoal); -webkit-text-stroke: 3px #555; position: absolute; left: 0; bottom: -10px; z-index: 1; }
+.trending-poster { width: 100%; aspect-ratio: 2/3; background-size: cover; background-position: center; border-radius: 4px; z-index: 2; margin-left: 15%; position: relative; overflow: hidden; }
+.trending-title-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 10px; font-size: 0.9rem; font-weight: 600; text-align: center; }
+
+.watchlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.watchlist-item { position: relative; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; cursor: pointer; }
+.wl-bg { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform var(--transition-fast); }
+.watchlist-item:hover .wl-bg { transform: scale(1.1); }
+.wl-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); }
+.wl-content h4 { font-size: 1rem; margin-bottom: 2px; }
+.wl-content p { font-size: 0.75rem; color: var(--text-muted); }
+.wl-icon { position: absolute; top: 10px; right: 10px; color: rgba(255,255,255,0.7); }
+
+.cinematic-footer { padding: 4rem 4%; background-color: var(--dark-bg); text-align: center; border-top: 1px solid #333; }
+.credits-title { font-family: var(--font-heading); font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
+.credits-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+.credit-item { display: flex; flex-direction: column; gap: 5px; }
+.credit-role { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px; }
+.credit-name { font-size: 1.2rem; font-weight: 600; }
+.credit-special { font-style: italic; color: #666; margin-bottom: 4rem; }
+.ending-sequence { margin-top: 5rem; padding-bottom: 5rem; }
+.end-q { font-size: 1.2rem; color: #888; margin-bottom: 1rem; }
+.end-a { font-size: 1.2rem; font-weight: bold; margin-bottom: 3rem; }
+.happy-birthday { font-family: var(--font-heading); font-size: clamp(3rem, 6vw, 5rem); color: white; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+/* ==========================================================================
+   I. UNIVERSAL EPISODE MODAL (CLEAN LAYOUT - NO VIGNETTE)
+   ========================================================================== */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100svh;
+    background: rgba(0,0,0,0.95); z-index: 1000; display: flex;
+    justify-content: center; align-items: center; transition: opacity var(--transition-fast);
+}
+
+.ep-modal-wrapper {
+    position: relative; width: 100%; max-width: 1000px; height: 90vh; height: 90svh;
+    background-color: var(--charcoal); border-radius: 12px; overflow-y: auto; overflow-x: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8); margin: 0 2%;
+}
+
+.modal-close {
+    position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: white;
+    z-index: 50; cursor: pointer; background: rgba(0,0,0,0.6); width: 40px; height: 40px;
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: background 0.2s;
+}
+.modal-close:hover { background: var(--netflix-red); }
+
+.ep-modal-hero {
+    position: relative; width: 100%; height: 50vh; min-height: 300px; background: #000;
+}
+/* Menampilkan video full lebar, proporsional, tanpa terpotong (contain) */
+#univ-ep-video {
+    width: 100%; height: 100%; object-fit: contain; 
+    background: #000;
+}
+
+.ep-modal-details {
+    position: relative; padding: 2rem 4% 4rem 4%; z-index: 10;
+}
+.ep-series-title {
+    font-family: var(--font-heading); font-size: 1.5rem; color: white; letter-spacing: 2px;
+    margin-bottom: 0.5rem; display: inline-block; padding: 2px 10px; border: 1px solid white;
+    text-shadow: 1px 1px 3px black; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+.ep-main-title {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 0.2rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+}
+.ep-sub-title {
+    font-size: 1.2rem; color: #ccc; margin-bottom: 1.5rem; font-weight: 400;
+}
+.ep-metadata-line {
+    display: flex; flex-wrap: wrap; gap: 15px; align-items: center; font-size: 0.9rem;
+    color: #a3a3a3; margin-bottom: 2rem;
+}
+.ep-actions-row {
+    display: flex; gap: 1rem; margin-bottom: 2.5rem;
+}
+.ep-synopsis-text {
+    font-size: 1.1rem; line-height: 1.6; color: #e5e5e5;
+    border-top: 1px solid #333; padding-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .ep-modal-wrapper { height: 100vh; height: 100svh; max-width: 100%; border-radius: 0; margin: 0; }
+    .ep-modal-hero { height: 40vh; }
+    .ep-modal-details { padding-top: 1.5rem; }
+}
+
+/* ==========================================================================
+   J. FILM ROLL ALBUM MODAL
+   ========================================================================== */
+.film-modal-header {
+    position: absolute; top: 40px; text-align: center; color: white; width: 100%; z-index: 10;
+}
+.film-modal-header h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 5px; text-shadow: 2px 2px 5px black; }
+.film-modal-header p { color: #ccc; font-size: 1rem; }
+
+.film-strip-wrapper {
+    width: 100%; overflow-x: auto; overflow-y: hidden; padding: 120px 20px 60px 20px;
+    display: flex; align-items: center; cursor: grab; scroll-behavior: smooth;
+    scrollbar-width: none; 
+}
+.film-strip-wrapper::-webkit-scrollbar { display: none; }
+.film-strip-wrapper:active { cursor: grabbing; }
+
+.film-strip-album {
+    display: flex; gap: 20px; padding: 35px 20px; background: #050505;
+    border: 1px solid #111; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+}
+
+.film-strip-album::before, .film-strip-album::after {
+    content: ''; position: absolute; left: 0; width: 100%; height: 12px;
+    background: repeating-linear-gradient(to right, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 12px, transparent 12px, transparent 24px);
+}
+.film-strip-album::before { top: 10px; }
+.film-strip-album::after { bottom: 10px; }
+
+.film-frame-item {
+    width: 280px; height: 190px; background-size: cover; background-position: center;
+    border: 1px solid #000; filter: grayscale(20%) contrast(1.1); transition: all 0.4s ease;
+    flex-shrink: 0; pointer-events: none; /* Mencegah drag gambar saat di-scroll */
+}
+.film-strip-album:hover .film-frame-item { filter: grayscale(60%) blur(1px); }
+.film-strip-album .film-frame-item:hover { filter: grayscale(0%) blur(0) contrast(1.1); transform: scale(1.1); z-index: 2; box-shadow: 0 0 25px rgba(0,0,0,0.8); }
+
+@media (max-width: 768px) {
+    .film-frame-item { width: 220px; height: 150px; }
+    .film-strip-album { padding: 25px 15px; }
+}
+
+/* ==========================================================================
+   K. EASTER EGG & CANVAS
+   ========================================================================== */
+.easter-egg-content { background: #1a1a1a; padding: 3rem 2rem; border-radius: 10px; text-align: center; max-width: 400px; border: 1px solid #333; }
+.easter-egg-content h2 { margin-bottom: 10px; }
+.easter-egg-content p { color: var(--text-muted); margin-bottom: 2rem; }
+#hearts-canvas, #confetti-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1001; }
+#confetti-canvas { z-index: 9998; }
+
+/* Animations */
+@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes scaleIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
